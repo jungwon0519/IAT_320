@@ -1,0 +1,55 @@
+#include <Adafruit_CircuitPlayground.h>
+
+float value;
+uint8_t pixeln = 0;
+
+void setup() {
+  Serial.begin(9600);
+  CircuitPlayground.begin();
+}
+
+void loop() {
+  value = CircuitPlayground.mic.soundPressureLevel(10);
+  
+  Serial.print("Sound Sensor SPL: ");
+  Serial.println(value);
+
+  delay(10);
+
+  if (value > 90){
+     CircuitPlayground.setPixelColor(pixeln++, CircuitPlayground.colorWheel(25 * pixeln));
+     delay(100);
+     if (pixeln == 11) {
+     pixeln = 0;
+     CircuitPlayground.clearPixels();
+  }
+    }
+
+   if (90>value>60){
+     CircuitPlayground.setPixelColor(pixeln++, CircuitPlayground.colorWheel(25 * pixeln));
+     delay(1000);
+     if (pixeln == 11) {
+     pixeln = 0;
+     CircuitPlayground.clearPixels();
+  }
+  
+
+    } 
+
+  if (60>value){
+     CircuitPlayground.setPixelColor(pixeln++, CircuitPlayground.colorWheel(25 * pixeln));
+     delay(3000);
+     if (pixeln == 11) {
+     pixeln = 0;
+     CircuitPlayground.clearPixels();
+  }
+
+delay(100);
+
+    }
+
+
+
+
+
+}
