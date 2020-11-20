@@ -2,9 +2,6 @@
 
 float value;
 uint8_t pixeln = 0;
-int num_lights = max(min(map(60, 120, 0, 10, value),10),0);
-int delay_length = map(value, 60, 120, 100, 500);
-
 
 void setup() {
   Serial.begin(9600);
