@@ -1,0 +1,45 @@
+#include <Adafruit_NeoPixel.h>
+#include <Adafruit_CircuitPlayground.h>
+#ifdef __AVR__
+#include <avr/power.h> // Required for 16 MHz Adafruit Trinket
+#endif
+float value;
+uint8_t pixeln = 0;
+// Which pin on the Arduino is connected to the NeoPixels?
+// On a Trinket or Gemma we suggest changing this to 1:
+#define LED_PIN     6
+#define LED_COUNT  30
+#define BRIGHTNESS 50
+Adafruit_NeoPixel strip(LED_COUNT, LED_PIN, NEO_GRB + NEO_KHZ800);
+void setup() {
+#if defined(__AVR_ATtiny85__) && (F_CPU == 16000000)
+  clock_prescale_set(clock_div_1);
+#endif
+  Serial.begin(9600);
+  CircuitPlayground.begin();
+  strip.begin();           // INITIALIZE NeoPixel strip object (REQUIRED)
+  strip.show();            // Turn OFF all pixels ASAP
+  strip.setBrightness(BRIGHTNESS);
+}
+void loop() {
+  //sound
+  value = CircuitPlayground.mic.soundPressureLevel(100); //evaluate sound pressure level
+  Serial.print("Sound Sensor SPL: ");
+  Serial.println(value); //allows us to see the sound pressure level the circuit playground measures
+  if (value > 80) {//if the sound pressure level is over 80
+    //strip.setPixelColor(colorWipe);         //  Set pixel's color (in RAM)                       //  Pause for a moment
+    theaterChase(strip.Color(127, 127, 127), 200); // White
+   delay(100);
+ 
+    }
+  } else if (value > 60) {// if the sound pressure level is 61-80
+    theaterChase(strip.Color(22, 97, 195), 200); // Blue
+    //  Pause for a moment
+    delay(100);
+    strip.show();
+    }
+    else {
+       theaterChase(strip.Color(240, 55, 82), 200); // pink
+    }
+  }
+}
