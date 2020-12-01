@@ -38,8 +38,8 @@ void loop() {
     delay(100);
     strip.show();
     }
-    else {
-       theaterChase(strip.Color(240, 55, 82), 200); // pink
+    else { //if the sound pressure level is 0-60
+       theaterChase(strip.Color(240, 55, 82), 200); // show pink
     }
   }
 }
